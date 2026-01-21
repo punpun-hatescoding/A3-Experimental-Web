@@ -268,7 +268,7 @@ function updateNarration(id) {
     "A hero’s return. A mother’s pride. The mark of an indestructible figure."
   ];
 
-  labelElement.innerText = "PHASE " + id + " //";
+  labelElement.innerText = "PHRASE " + id + " //";
   textElement.innerText = messages[id-1] + " [INTERACT TO REPROGRAM]";
 }
 

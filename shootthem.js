@@ -165,7 +165,7 @@ function draw() {
         ambushGracePeriod--; 
         fill(0, 255, 0);
         textSize(20);
-        text("CALIBRATING SENSORS...", width/2, height - 50);
+        text("THEY'RE GETTING CLOSER...", width/2, height - 50);
     } else {
         // Active Danger Mode
         if (movingPixelCount > movementLimit && isAmbushActive) {
@@ -182,7 +182,7 @@ function drawP5UI() {
     fill(255, 0, 0);
     textAlign(CENTER);
     textSize(30);
-    text("FREEZE! SCANNER ACTIVE", width/2, 100);
+    text("STAY STILL! DON'T LET THEM SEE YOU.", width/2, 100);
     
     let barWidth = 300;
     let displayCount = constrain(movingPixelCount, 0, movementLimit);
@@ -316,7 +316,7 @@ function targetHit(targetElement) {
     
     if (confirmedKills >= totalTargets) {
         // WIN CONDITION MET
-        console.log("Mission Complete. All targets neutralized. Thank you for your service.");
+        console.log("Great job, soldier! The hard part is over. It’s been such a pleasure having you with us. You were the best asset we ever had!");
         
         // 1. Wait a tiny bit for the last death animation to start
         setTimeout(() => {
@@ -373,9 +373,9 @@ function createDustParticles() {
         shootingScene.appendChild(dust);
     }
 }
-window.addEventListener('keydown', (e) => {
+/*window.addEventListener('keydown', (e) => {
     if (e.key === 'w' || e.key === 'W') {
         console.log("DEV MODE: Triggering Win Scene...");
         triggerWinScene();
     }
-});
+});*/

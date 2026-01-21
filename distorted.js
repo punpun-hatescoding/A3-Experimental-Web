@@ -1,17 +1,26 @@
-/*
- * COMBINED SKETCH
- * - Uses WEBGL for the main canvas (to support Shaders).
- * - Uses a separate Graphics Buffer (pg) for the Glitch logic (to support BlendModes/Text).
- */
 
 let theShader;
 let video;
 let pg; // The "Paper Graphics" buffer where we draw the glitches
 let isVideoReady = false;
-
+let messages = [
+  "The skyline is so beautiful tonight, isn't it?",
+  "It’s the last thing you’ll ever need to see.",
+  "Don't fight the blurriness; it’s just the system embracing you.",
+  "We’re extracting the noise, the spirit, the 'old you'...",
+  "...leaving only the peacefulness behind.",
+  "You aren't hurting anymore.",
+  "You've become one of us.",
+  "Your dedication towards the system will always be recognized.",
+  "Welcome home."
+];
+let currentMsgIndex = 0;
+let lastMsgChange = 0;
+let msgDuration = 5000; // Increased to 5s for easier reading
+let typewriterIndex = 0;
+let currentDisplayText = "";
 function preload() {
-  // Load the shader from your assets folder
-  // Make sure you have 'assets/webcam.vert' and 'assets/webcam.frag'
+ 
   theShader = loadShader('assets/webcam.vert', 'assets/webcam.frag');
 }
 
@@ -31,6 +40,7 @@ function setup() {
 
   // Cap frame rate for that chunky cinematic feel
   frameRate(12);
+  lastMsgChange = millis();
 }
 
 function videoLoaded() {
@@ -45,6 +55,7 @@ function windowResized() {
 }
 
 function draw() {
+  updateNarrationLogic();
   // --- PART 1: DRAW GLITCHES TO THE BUFFER (pg) ---
   // We call a custom function that handles all the 2D logic
   // We pass 'pg' so it draws to the buffer, not the screen
@@ -64,8 +75,55 @@ function draw() {
   // Draw a rectangle covering the WEBGL screen
   // WEBGL coordinates start at center (0,0), so we offset by half width/height
   rect(-width/2, -height/2, width, height);
+  // --- PART 4: TOP-PRIORITY UI OVERLAY ---
+  drawTopPriorityUI();
+}
+function updateNarrationLogic() {
+  let now = millis();
+  
+  // Logic to switch to next message
+  if (now - lastMsgChange > msgDuration) {
+    currentMsgIndex = (currentMsgIndex + 1) % messages.length;
+    lastMsgChange = now;
+    typewriterIndex = 0;
+    currentDisplayText = "";
+  }
+
+  // Typewriter reveal logic (reveals 1 char per frame)
+  if (typewriterIndex < messages[currentMsgIndex].length) {
+    currentDisplayText += messages[currentMsgIndex].charAt(typewriterIndex);
+    typewriterIndex++;
+  }
 }
 
+function drawTopPriorityUI() {
+  push();
+  // Reset coordinates for 2D overlay
+  translate(-width/2, -height/2); 
+  
+  let boxW = min(width * 0.8, 800);
+  let boxH = 140;
+  let boxX = (width - boxW) / 2;
+  let boxY = 60;
+
+  // Solid Box for maximum readability
+  fill(0, 200); // Slightly more opaque background
+  stroke(0, 255, 0, 150); // Neon Green Border
+  strokeWeight(2);
+  rect(boxX, boxY, boxW, boxH, 10);
+
+  // Friendly Mint Text
+  noStroke();
+  fill(209, 255, 214, 200); // Warm Mint Green
+  textAlign(CENTER, CENTER);
+  textFont('adso');
+  textStyle(BOLD);
+  textSize(22);
+  
+  // Display the typewriter text
+  text(currentDisplayText, boxX + 40, boxY + 10, boxW - 80, boxH - 20);
+  pop();
+}
 // ==================================================
 //      THE GLITCH LOGIC (Adapted for Buffer)
 // ==================================================
@@ -179,9 +237,44 @@ function drawGlitchLogic(buffer) {
 
   // --- 7. TEXT UI ---
   buffer.fill(0, 255, 0);
-  buffer.textSize(25);
+  buffer.textSize(20);
   buffer.textAlign(LEFT, BOTTOM);
+  buffer.text("PRESS 'N' TO RETURN TO MAIN MENU", 20, buffer.height - 90);
   buffer.text("DISTORTION LEVEL: " + floor(chaos) + "%", 20, buffer.height - 30);
+  buffer.text("CLICK & HOLD TO READ THE NARRATIVE", 20, buffer.height - 60);
+  // --- 8. DYNAMIC NARRATION LOOP ---
+  let boxW = min(buffer.width * 0.8, 800);
+  let boxH = 120;
+  let boxX = (buffer.width - boxW) / 2;
+  let boxY = 50;
+
+  // Handle Logic: Change message over time
+  if (millis() - lastMsgChange > msgDuration) {
+    currentMsgIndex = (currentMsgIndex + 1) % messages.length;
+    lastMsgChange = millis();
+  }
+
+  // Draw the Box
+  buffer.push();
+  buffer.rectMode(CORNER);
+  buffer.fill(0, 200); //
+  buffer.stroke(0, 255, 0, 150); // Neon Green Border
+  buffer.strokeWeight(20);
+  buffer.rect(boxX, boxY, boxW, boxH, 10);
+
+  // Draw the Text
+  buffer.stroke(255);
+  buffer.strokeWeight(1);
+  buffer.fill(209, 255, 214); // Warm Mint Green
+  buffer.textAlign(CENTER, CENTER);
+  buffer.textFont('Courier New'); // Monospaced for that digital feel
+  buffer.textSize(25);
+  buffer.textLeading(30);
+  
+  // Display the current message in the loop
+  let currentText = messages[currentMsgIndex];
+  buffer.text(currentText, boxX + 40, boxY + 10, boxW - 80, boxH - 20);
+  buffer.pop();
 }
 
 function keyPressed() {

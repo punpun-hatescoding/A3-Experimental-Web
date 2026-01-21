@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 2. Disable the button
     leaveBtn.disabled = true;
-    leaveBtn.innerText = "CRITICAL FAILURE";
+    leaveBtn.innerText = "CRASHING...";
 
     // 3. Spawn Error Messages rapidly
     let errorCount = 0;
