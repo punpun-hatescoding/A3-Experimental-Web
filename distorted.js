@@ -19,8 +19,8 @@ let lastMsgChange = 0;
 let msgDuration = 5000; // Increased to 5s for easier reading
 let typewriterIndex = 0;
 let currentDisplayText = "";
+
 function preload() {
- 
   theShader = loadShader('assets/webcam.vert', 'assets/webcam.frag');
 }
 
