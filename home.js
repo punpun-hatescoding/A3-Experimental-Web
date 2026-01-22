@@ -125,6 +125,8 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-if (keyPressed === 'N' || keyPressed === 'n') {
-   window.location.href = 'index.html'; 
+function keyPressed() {
+  if (key === 'N' || key === 'n') {
+     window.location.href = 'index.html'; 
+  }
 }
