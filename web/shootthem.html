@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" href="https://use.typekit.net/avr8pxm.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="bg-shooting">
+      <div id="aim-cursor"></div>
+      <div id="shoot-deers"></div>
+
+      <div id="deer1" class="silhouette-target"></div>
+      <div id="deer2" class="silhouette-target"></div>
+      <div id="deer3" class="silhouette-target"></div>
+      <div id="deer4" class="silhouette-target"></div>
+      <div id="deer5" class="silhouette-target"></div>
+      <div id="deer6" class="silhouette-target"></div>
+
+      <div id="shoot-overlay1"></div>
+      <div id="shoot-overlay2"></div>
+      <div id="shoot-bullet"></div>
+    </div>
+
+    <div id="p5-container" class="hidden"></div>
+
+    <div id="tunnel-vision"></div>
+    <div id="intel-panel">
+      <div class="intel-header">
+        <h3>OPFOR CASUALTIES CONFIRMED</h3>
+        <span id="intel-counter">0</span> CONFIRMED
+      </div>
+      <ul id="dogtag-list"></ul>
+    </div>
+    <div id="win-screen" class="hidden">
+      <div class="win-content">
+        <h1 class="blink-text">MISSION ACCOMPLISHED</h1>
+        <div class="stats-box">
+          <p>OUTSTANDING PERFORMANCE</p>
+          <p>YOUR VALOR HAS BEEN NOTED IN THE OFFICIAL REPORT</p>
+          <hr/>
+          <p id="extraction-timer">Prepare for identity verification and debrief...</p>
+        </div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+      </div>
+    </div>
+    <script src="shootthem.js"></script>
+  </body>
+</html>
