@@ -66,7 +66,7 @@ function draw() {
 }
 
 function drawStartPrompt() {
-  fill(209, 255, 214, 150);
+  fill(209, 255, 214);
   textAlign(CENTER, CENTER);
   textSize(16);
   // Blinking effect
