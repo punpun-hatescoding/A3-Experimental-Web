@@ -1,18 +1,17 @@
 let messages = [
-  "You're almost home at last.",
-  "This is what you've been waiting for all those days, isn't it?",
-  "We really appreciate having had you by our side.",
-  "Your valor will always be a part of our memory.",
-  "But now... look into the space where you used to be.",
-  "Who is it that you see?",
-  "From where we're standing, you look perfectly empty.",
-  "You look just like us.",
-  "Welcome home to the forever."
+  "Welcome home, son.",
+  "We have been waiting for you for so long.",
+  "The war took so much away from us.",
+  "And we thought it might have taken you too.",
+  "But you survived.",
+  "Let those tragic memories sleep for eternity.",
+  "From now on, you are safe here with us.",
+  "Together, we will build a brighter future just like we dreamed.",
 ];
 
 let currentMsgIndex = 0;
 let lastMsgChange = 0;
-let msgDuration = 6000; 
+let msgDuration = 4000;  // 4 seconds per message
 let typewriterIndex = 0;
 let currentDisplayText = "";
 

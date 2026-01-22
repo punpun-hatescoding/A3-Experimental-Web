@@ -90,11 +90,11 @@ function triggerDeployment() {
   fill(255, 0, 0);
   textAlign(CENTER, CENTER);
   textSize(32);
-  text("MAXIMUM TOLERANCE REACHED\nDEPLOYING SUBJECT...", width/2, height/2);
+  text("COMPLETED TRAINING. PREPARING FOR BATTLE...", width/2, height/2);
 
   setTimeout(() => {
     window.location.href = 'shootthem.html'; // Redirect to cutscene
-  }, 3000);
+  }, 5000);
 }
 
 // ==========================================
@@ -261,15 +261,17 @@ function updateNarration(id) {
   if (!textElement) return; 
 
   const messages = [
-    "Ask not what your country can do for you—ask what you can do for your country.",
     "Today, you have been selected to protect the skyline with your bodies.",
+    "Ask not what your country can do for you—ask what you can do for your country.",
     "Reminder: Your biological termination date is irrelevant. Your service record is immortal.",
+    "A hero’s return. A mother’s pride. The mark of an indestructible figure.",
+    "Fight for honor. Fight for glory. Fight for the future.",
     "THIS IS THE WAR TO END ALL WARS.",
     "A hero’s return. A mother’s pride. The mark of an indestructible figure."
   ];
 
   labelElement.innerText = "PHRASE " + id + " //";
-  textElement.innerText = messages[id-1] + " [INTERACT TO REPROGRAM]";
+  textElement.innerText = messages[id-1] + " [HOLD AND PRESS TO ALTER DISTORTION]";
 }
 
 function windowResized() { resizeCanvas(windowWidth, windowHeight); }

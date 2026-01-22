@@ -5,15 +5,13 @@ let pg; // The "Paper Graphics" buffer where we draw the glitches
 let isVideoReady = false;
 let messages = [
   "The skyline is so beautiful tonight, isn't it?",
-  "It’s the last thing you’ll ever need to see.",
   "Don't fight the blurriness; it’s just the system embracing you.",
   "We’re extracting the noise, the spirit, the 'old you'...",
   "...leaving only the peacefulness behind.",
   "You aren't hurting anymore.",
   "You've become one of us.",
-  "Your dedication towards the system will always be recognized.",
-  "Welcome home."
 ];
+
 let currentMsgIndex = 0;
 let lastMsgChange = 0;
 let msgDuration = 5000; // Increased to 5s for easier reading
@@ -239,9 +237,9 @@ function drawGlitchLogic(buffer) {
   buffer.fill(0, 255, 0);
   buffer.textSize(20);
   buffer.textAlign(LEFT, BOTTOM);
-  buffer.text("PRESS 'N' TO RETURN TO MAIN MENU", 20, buffer.height - 90);
+  buffer.text("CLICK & HOLD TO READ THE NARRATIVE", 20, buffer.height - 90);
   buffer.text("DISTORTION LEVEL: " + floor(chaos) + "%", 20, buffer.height - 30);
-  buffer.text("CLICK & HOLD TO READ THE NARRATIVE", 20, buffer.height - 60);
+  buffer.text("PRESS 'N' TO ARRIVE HOME", 20, buffer.height - 60);
   // --- 8. DYNAMIC NARRATION LOOP ---
   let boxW = min(buffer.width * 0.8, 800);
   let boxH = 120;
@@ -279,6 +277,6 @@ function drawGlitchLogic(buffer) {
 
 function keyPressed() {
   if (key === 'n' || key === 'N') {
-    window.location.href = 'index.html'; 
+    window.location.href = 'home.html'; 
   }
 }

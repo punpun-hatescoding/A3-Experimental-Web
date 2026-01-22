@@ -2,6 +2,7 @@
 //           GLOBAL VARIABLES
 // ==========================================
 let isAmbushActive = false; // False = Shooting, True = Scanning
+let audioStarted = false;
 
 // DOM Elements
 const shootingScene = document.querySelector('.bg-shooting');
@@ -16,6 +17,7 @@ let confirmedKills = 0;
 
 // Sounds
 const gunshotSound = new Audio('sounds/shot-faraway.mp3'); 
+const bgSound = new Audio('sounds/war.mp3');
 
 // Fake Data for Intel
 const ranks = ['PVT', 'PFC', 'CPL', 'SGT', 'SSG', 'LT', 'CPT', 'MAJ'];
@@ -103,6 +105,8 @@ function setup() {
     video.size(100, 80);
     video.hide();
     prevFrame = createImage(100, 80);
+    bgSound.loop = true;   // This makes it repeat forever
+    bgSound.volume = 1;
 }
 
 function draw() {
@@ -229,7 +233,12 @@ window.addEventListener('mousemove', (e) => {
     aimCursor.style.top = e.clientY + 'px';
     tunnelVision.style.setProperty('--x', e.clientX + 'px');
     tunnelVision.style.setProperty('--y', e.clientY + 'px');
-    
+    if (!audioStarted) {
+        bgSound.loop = true; // Ensure it loops
+        bgSound.volume = 1; // Set volume (Optional: 1.0 might be too loud)
+        bgSound.play().catch(error => console.log("Audio play failed:", error));
+        audioStarted = true;
+    }
     if (!isAmbushActive) {
         const cx = window.innerWidth / 2;
         const cy = window.innerHeight / 2;
@@ -266,7 +275,7 @@ shootingScene.addEventListener('click', (e) => {
 
 function shootBullet(e) {
     const soundClone = gunshotSound.cloneNode();
-    soundClone.volume = Math.random() * 0.15 + 0.05; 
+    soundClone.volume = Math.random() * 0.15 + 0.01; 
     soundClone.play();
     
     const bullet = document.createElement('div');
