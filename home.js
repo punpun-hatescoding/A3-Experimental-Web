@@ -1,5 +1,5 @@
 // --- AUDIO ASSETS ---
-// Make sure you have this file in your sounds folder
+
 const typeSound = new Audio('sounds/typewriter.mp3'); 
 
 let audioEnabled = false; // Tracks if user has clicked to allow sound
@@ -112,11 +112,11 @@ function updateNarrationLogic() {
 
 function playTypeSound() {
   if (audioEnabled) {
-    // This resets the audio to the beginning and plays it again
-    // It does NOT create a clone, so it uses the same audio file repeatedly
+
+ 
     typeSound.currentTime = 0; //
     typeSound.play().catch(e => {
-        // Ignore errors if audio isn't ready yet
+    
     });
   }
 }

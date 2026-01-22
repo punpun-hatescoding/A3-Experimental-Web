@@ -8,7 +8,7 @@ body {
   background-color: #000000; /* Black fallback */
   font-family: "adso", sans-serif;
   overflow: hidden; /* No scrollbars */
-  perspective: 5000px; /* Controls how "deep" the 3D looks */
+  perspective: 5000px; 
   overflow: hidden; /* Prevents scrollbars when scene tilts */
   background: #000;
 }
@@ -318,7 +318,7 @@ button:active {
 /* 2. Style the Fake Cursor */
 #aim-cursor {
   position: absolute;
-  width: 150px; /* MAKE IT AS BIG AS YOU WANT! */
+  width: 150px; 
   height: 150px;
   background-image: url("images/cross.png");
   background-size: contain;
@@ -445,8 +445,6 @@ button:active {
   background-position: bottom right; /* Align it to the corner */
   background-size: contain; /* Now it can grow up to 50% height because width isn't choking it */
 
-  /* DEBUGGING (Optional: Remove after testing) */
-  /* border: 2px solid red; */ /* Uncomment this to SEE the clickable box! */
 }
 
 #deer3 {

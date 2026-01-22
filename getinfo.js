@@ -15,7 +15,7 @@ let snapshot;
 let processedSnapshot;
 
 function preload() {
-  // 1. LOAD YOUR CUSTOM PNG DESIGN HERE
+
   idCardBase = loadImage('images/identity-card.png'); 
 }
 
