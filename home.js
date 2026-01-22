@@ -18,7 +18,7 @@ let messages = [
 
 let currentMsgIndex = 0;
 let lastMsgChange = 0;
-let msgDuration = 4000;  
+let msgDuration = 6000;  
 let typewriterIndex = 0;
 let currentDisplayText = "";
 
@@ -27,7 +27,7 @@ function setup() {
   lastMsgChange = millis();
   
   // Optional: Lower the volume so the rapid clicking isn't deafening
-  typeSound.volume = 0.2; 
+  typeSound.volume = 0.1; 
 }
 
 function draw() {
