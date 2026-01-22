@@ -1,36 +1,50 @@
+// --- AUDIO ASSETS ---
+// Make sure you have this file in your sounds folder
+const typeSound = new Audio('sounds/typewriter.mp3'); 
+
+let audioEnabled = false; // Tracks if user has clicked to allow sound
+
+// --- NARRATION SETTINGS ---
 let messages = [
   "Welcome home, son.",
   "We have been waiting for you for so long.",
   "The war took so much away from us.",
-  "And we thought it might have taken you too.",
-  "But you survived.",
+  "And we thought it might have taken you too.", // Fixed grammar
+  "But fortunately, you survived.",
   "Let those tragic memories sleep for eternity.",
   "From now on, you are safe here with us.",
-  "Together, we will build a brighter future just like we dreamed.",
+  "Together, we will build a brighter future just like we've dreamed.",
 ];
 
 let currentMsgIndex = 0;
 let lastMsgChange = 0;
-let msgDuration = 4000;  // 4 seconds per message
+let msgDuration = 4000;  
 let typewriterIndex = 0;
 let currentDisplayText = "";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   lastMsgChange = millis();
+  
+  // Optional: Lower the volume so the rapid clicking isn't deafening
+  typeSound.volume = 0.2; 
 }
 
 function draw() {
   background(0); // The absolute void
 
-  updateNarrationLogic();
+  // If user hasn't clicked yet, show a start prompt
+  if (!audioEnabled) {
+    drawStartPrompt();
+  } else {
+    updateNarrationLogic();
+  }
 
   // --- CENTERED NARRATIVE TEXT ---
-  // No boxes, no borders, just the voice of the system
-  fill(209, 255, 214); // The "Kind" Mint Green
+  fill(209, 255, 214); // Mint Green
   noStroke();
   textAlign(CENTER, CENTER);
-  textFont('Courier New');
+  textFont('input-mono-compressed');
   textSize(24);
   textStyle(BOLD);
   
@@ -38,13 +52,35 @@ function draw() {
   let textWidthLimit = width * 0.6;
   text(currentDisplayText, width/2 - textWidthLimit/2, height/2 - 100, textWidthLimit, 200);
   
-  // --- SUBTLE PROGRESS INDICATOR (Optional) ---
-  // A tiny, fading percentage at the very bottom
+  // --- SUBTLE PROGRESS INDICATOR ---
+  // Since it loops, this bar will fill and reset repeatedly
   let sync = floor(map(currentMsgIndex, 0, messages.length - 1, 0, 100));
-  fill(0, 255, 0, 50);
+  fill(209, 255, 214, 150);
   textSize(12);
   textAlign(CENTER, BOTTOM);
   text("SYNC: " + sync + "%", width/2, height - 40);
+  // --- RESTART PROMPT ---
+  fill(209, 255, 214, 150); // Slightly brighter/transparent green
+  textSize(14);
+  text("[ PRESS 'N' TO RESTART ]", width/2, height - 20);
+}
+
+function drawStartPrompt() {
+  fill(209, 255, 214, 150);
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  // Blinking effect
+  if (frameCount % 60 < 30) {
+    text("[ You have arrived home ]", width/2, height/2 + 100);
+  }
+}
+
+function mousePressed() {
+  if (!audioEnabled) {
+    audioEnabled = true;
+    // Reset timer so the first message doesn't skip
+    lastMsgChange = millis(); 
+  }
 }
 
 function updateNarrationLogic() {
@@ -52,22 +88,43 @@ function updateNarrationLogic() {
   
   // Logic to switch to next message
   if (now - lastMsgChange > msgDuration) {
-    // If we reach the end, stay on "Welcome home to the forever."
-    if (currentMsgIndex < messages.length - 1) {
-      currentMsgIndex++;
-      lastMsgChange = now;
-      typewriterIndex = 0;
-      currentDisplayText = "";
-    }
+    currentMsgIndex = (currentMsgIndex + 1) % messages.length;
+    lastMsgChange = now;
+    typewriterIndex = 0;
+    currentDisplayText = "";
   }
 
   // Typewriter reveal logic
-  if (frameCount % 2 === 0 && typewriterIndex < messages[currentMsgIndex].length) {
-    currentDisplayText += messages[currentMsgIndex].charAt(typewriterIndex);
+  if (frameCount % 4 === 0 && typewriterIndex < messages[currentMsgIndex].length) {
+    // 1. Get the character
+    let char = messages[currentMsgIndex].charAt(typewriterIndex);
+    
+    // 2. Add it to the screen
+    currentDisplayText += char;
     typewriterIndex++;
+    
+    // 3. ONLY play sound if it is NOT a space
+    if (char !== ' ') {
+      playTypeSound();  
+    }
+  }
+}
+
+function playTypeSound() {
+  if (audioEnabled) {
+    // This resets the audio to the beginning and plays it again
+    // It does NOT create a clone, so it uses the same audio file repeatedly
+    typeSound.currentTime = 0; //
+    typeSound.play().catch(e => {
+        // Ignore errors if audio isn't ready yet
+    });
   }
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+}
+
+if (keyPressed === 'N' || keyPressed === 'n') {
+   window.location.href = 'index.html'; 
 }

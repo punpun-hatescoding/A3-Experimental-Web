@@ -265,7 +265,7 @@ function drawGlitchLogic(buffer) {
   buffer.strokeWeight(1);
   buffer.fill(209, 255, 214); // Warm Mint Green
   buffer.textAlign(CENTER, CENTER);
-  buffer.textFont('Courier New'); // Monospaced for that digital feel
+  buffer.textFont('input-mono-compressed'); // Monospaced for that digital feel
   buffer.textSize(25);
   buffer.textLeading(30);
   
